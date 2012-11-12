@@ -19,6 +19,7 @@
  */
 package org.graylog2.pagerdutyalarmcallback.callback;
 
+import java.util.HashMap;
 import java.util.Map;
 import org.graylog2.plugin.alarms.Alarm;
 import org.graylog2.plugin.alarms.callbacks.AlarmCallback;
@@ -47,6 +48,14 @@ public class PagerdutyAlarmCallback implements AlarmCallback {
         trigger.trigger(alarm);
     }
 
+    public Map<String, String> getRequestedConfiguration() {
+        Map<String, String> config = new HashMap<String, String>();
+        
+        config.put("service_key", "PagerDuty service key");
+        
+        return config;
+    }
+    
     public String getName() {
         return NAME;
     }
