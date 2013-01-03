@@ -31,12 +31,12 @@ import org.graylog2.plugin.alarms.callbacks.AlarmCallbackException;
  */
 public class PagerdutyAlarmCallback implements AlarmCallback {
 
-    public static final String NAME = "PagerDuty alarm trigger";
+    public static final String NAME = "PagerDuty alarm callback";
     
     private String serviceKey;
     
     public void initialize(Map<String, String> config) throws AlarmCallbackConfigurationException {
-        if (config == null || !config.containsKey("service_key")) {
+        if (config == null || !config.containsKey("service_key") || config.get("service_key").isEmpty()) {
             throw new AlarmCallbackConfigurationException("Required config parameter service_key is missing.");
         }
         
