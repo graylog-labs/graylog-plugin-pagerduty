@@ -1,5 +1,6 @@
 graylog2-plugin-alarmcallback-pagerduty
 =======================================
+[![Build Status](https://travis-ci.org/Graylog2/graylog2-plugin-alarmcallback-pagerduty.svg)](https://travis-ci.org/Graylog2/graylog2-plugin-alarmcallback-pagerduty)
 
 Alarm callback that is triggering [PagerDuty](http://pagerduty.com/) alarms.
 
