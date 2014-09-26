@@ -28,7 +28,7 @@ public class PagerDutyAlarmCallbackMetadata implements PluginMetaData {
 
     @Override
     public Version getVersion() {
-        return new Version(0, 21, 0);
+        return new Version(0, 90, 0);
     }
 
     @Override
@@ -38,6 +38,6 @@ public class PagerDutyAlarmCallbackMetadata implements PluginMetaData {
 
     @Override
     public Version getRequiredVersion() {
-        return new Version(0, 21, 0);
+        return new Version(0, 90, 0);
     }
 }
