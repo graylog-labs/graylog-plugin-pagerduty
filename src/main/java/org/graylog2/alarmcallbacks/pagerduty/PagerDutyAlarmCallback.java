@@ -1,3 +1,23 @@
+/**
+ * Copyright 2013-2014 TORCH GmbH
+ *
+ * This file is part of Graylog2.
+ *
+ * Graylog2 is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Graylog2 is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Graylog2.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package org.graylog2.alarmcallbacks.pagerduty;
 
 import com.google.common.annotations.VisibleForTesting;
@@ -64,11 +84,11 @@ public class PagerDutyAlarmCallback implements AlarmCallback {
                 ConfigurationField.Optional.OPTIONAL));
         configurationRequest.addField(new TextField(
                 CK_CLIENT, "Client name", "Graylog2",
-                "The name of the Graylog2 server that is triggering the PagerDuty event.",
+                "The name of the Graylog2 system that is triggering the PagerDuty event.",
                 ConfigurationField.Optional.OPTIONAL));
         configurationRequest.addField(new TextField(
                 CK_CLIENT_URL, "Client URL", "",
-                "The URL of the Graylog2 server that is triggering the PagerDuty event.",
+                "The URL of the Graylog2 system that is triggering the PagerDuty event.",
                 ConfigurationField.Optional.OPTIONAL));
 
         return configurationRequest;
