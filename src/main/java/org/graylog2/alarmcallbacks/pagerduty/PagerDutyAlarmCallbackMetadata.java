@@ -41,12 +41,12 @@ public class PagerDutyAlarmCallbackMetadata implements PluginMetaData {
 
     @Override
     public String getAuthor() {
-        return "TORCH GmbH";
+        return "Graylog, Inc.";
     }
 
     @Override
     public URI getURL() {
-        return URI.create("http://www.graylog2.org");
+        return URI.create("http://www.graylog.org");
     }
 
     @Override

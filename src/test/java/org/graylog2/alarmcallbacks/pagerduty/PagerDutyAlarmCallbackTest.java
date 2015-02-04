@@ -45,7 +45,7 @@ public class PagerDutyAlarmCallbackTest {
                     "use_custom_incident_key", true,
                     "incident_key_prefix", "Prefix/",
                     "client", "TEST_Client",
-                    "client_url", "http://www.graylog2.org"
+                    "client_url", "http://www.graylog.org"
             ));
     private PagerDutyAlarmCallback pagerDutyAlarmCallback;
 

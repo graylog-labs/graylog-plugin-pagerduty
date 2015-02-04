@@ -79,16 +79,16 @@ public class PagerDutyAlarmCallback implements AlarmCallback {
                 CK_CUSTOM_INCIDENT_KEY, "Use custom incident key", true,
                 "Generate a custom incident key based on the Stream and the Alert Condition."));
         configurationRequest.addField(new TextField(
-                CK_INCIDENT_KEY_PREFIX, "Incident key prefix", "Graylog2/",
+                CK_INCIDENT_KEY_PREFIX, "Incident key prefix", "Graylog/",
                 "Identifies the incident.",
                 ConfigurationField.Optional.OPTIONAL));
         configurationRequest.addField(new TextField(
-                CK_CLIENT, "Client name", "Graylog2",
-                "The name of the Graylog2 system that is triggering the PagerDuty event.",
+                CK_CLIENT, "Client name", "Graylog",
+                "The name of the Graylog system that is triggering the PagerDuty event.",
                 ConfigurationField.Optional.OPTIONAL));
         configurationRequest.addField(new TextField(
                 CK_CLIENT_URL, "Client URL", "",
-                "The URL of the Graylog2 system that is triggering the PagerDuty event.",
+                "The URL of the Graylog system that is triggering the PagerDuty event.",
                 ConfigurationField.Optional.OPTIONAL));
 
         return configurationRequest;
