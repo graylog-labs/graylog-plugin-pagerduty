@@ -24,6 +24,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
+import org.graylog2.plugin.Message;
+import org.graylog2.plugin.MessageSummary;
 import org.graylog2.plugin.alarms.AlertCondition;
 import org.graylog2.plugin.alarms.callbacks.AlarmCallbackException;
 import org.graylog2.plugin.streams.Stream;
@@ -36,6 +39,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -130,10 +134,31 @@ public class PagerDutyClient {
                         "stream_id", stream.getId(),
                         "stream_title", stream.getTitle(),
                         "backlog", checkResult.getTriggeredCondition().getBacklog(),
-                        "search_hits", checkResult.getTriggeredCondition().getSearchHits().size(),
+                        "search_hits", getAlarmBacklog(checkResult).size(),
                         "alert_description", checkResult.getTriggeredCondition().getDescription()
                 )
         );
+    }
+
+    protected List<Message> getAlarmBacklog(AlertCondition.CheckResult result) {
+        final AlertCondition alertCondition = result.getTriggeredCondition();
+        final List<MessageSummary> matchingMessages = result.getMatchingMessages();
+
+        final int effectiveBacklogSize = Math.min(alertCondition.getBacklog(), matchingMessages.size());
+
+        if (effectiveBacklogSize == 0) {
+            return Collections.emptyList();
+        }
+
+        final List<MessageSummary> backlogSummaries = matchingMessages.subList(0, effectiveBacklogSize);
+
+        final List<Message> backlog = Lists.newArrayListWithCapacity(effectiveBacklogSize);
+
+        for (MessageSummary messageSummary : backlogSummaries) {
+            backlog.add(messageSummary.getRawMessage());
+        }
+
+        return backlog;
     }
 
     // See http://developer.pagerduty.com/documentation/integration/events/trigger
