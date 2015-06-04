@@ -2,3 +2,25 @@ language: java
 jdk:
   - oraclejdk7
   - oraclejdk8
+addons:
+  apt:
+    packages:
+      - rpm
+before_deploy:
+  - mvn jdeb:jdeb && export RELEASE_DEB_FILE=$(ls target/*.deb)
+  - mvn rpm:rpm && export RELEASE_RPM_FILE=$(ls target/rpm/alarmcallback-pagerduty/RPMS/noarch/alarmcallback-pagerduty-*.rpm)
+  - export RELEASE_PKG_FILE=$(ls target/alarmcallback-pagerduty-*.jar)
+  - echo "Deploying release to GitHub releases"
+deploy:
+  provider: releases
+  api_key:
+    secure: "O3ZbA0+vc67v3jtTCuu1wm6H+O4G7F9dlVFF7mGGKa1tPwaciuvywokYDT3mxwXqWp0GQW0/Nw9VjcvaB8+JHGmixz69sEnmYRo3ByYrd8IjUtYXi6GQbfy3UZUyj51TZzqXwGQuxXU2eXf4RXRCc2LnCAx9tqVd4v/nohNyn0s="
+  file: 
+    - "${RELEASE_PKG_FILE}"
+    - "${RELEASE_DEB_FILE}"
+    - "${RELEASE_RPM_FILE}"
+  skip_cleanup: true
+  on:
+    tags: true
+    jdk: oraclejdk7
+
