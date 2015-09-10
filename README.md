@@ -11,7 +11,7 @@ An alarm callback plugin for integrating [PagerDuty](http://pagerduty.com/) into
 
 ## Installation
 
-[Download the plugin](https://github.com/Graylog2/graylog-plugin-hipchat/releases)
+[Download the plugin](https://github.com/Graylog2/graylog-plugin-pagerduty/releases)
 and place the `.jar` file in your Graylog plugin directory. The plugin directory
 is the `plugins/` folder relative from your `graylog-server` directory by default
 and can be configured in your `graylog.conf` file.
