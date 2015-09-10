@@ -1,20 +1,24 @@
-# Graylog PagerDuty alarm callback
+PagerDuty Plugin for Graylog
+============================
+
+[![Build Status](https://travis-ci.org/Graylog2/graylog-plugin-pagerduty.svg)](https://travis-ci.org/Graylog2/graylog-plugin-pagerduty)
 
 An alarm callback plugin for integrating [PagerDuty](http://pagerduty.com/) into [Graylog](https://www.graylog.org/).
 
 ![Screenshot: Overview](https://s3.amazonaws.com/graylog2public/images/plugin-pagerduty-ac-1.png)
 
-[![Build Status](https://travis-ci.org/Graylog2/graylog-plugin-alarmcallback-pagerduty.svg)](https://travis-ci.org/Graylog2/graylog-plugin-alarmcallback-pagerduty)
+**Required Graylog version:** 1.0 and later
 
-## Instructions
+## Installation
 
-#### Step 1: Installing the plugin
+[Download the plugin](https://github.com/Graylog2/graylog-plugin-hipchat/releases)
+and place the `.jar` file in your Graylog plugin directory. The plugin directory
+is the `plugins/` folder relative from your `graylog-server` directory by default
+and can be configured in your `graylog.conf` file.
 
-Copy the `.jar` file that you received to your Graylog plugin directory which is configured in your `graylog.conf` configuration file using the `plugin_dir` variable. Restart your `graylog-server` process to load the plugin.
+Restart `graylog-server` and you are done.
 
-Note that you should do this for every `graylog-server` instance you are running.
-
-#### Step 2: Configuring the plugin
+## Usage
 
 The only thing you need to do in your PagerDuty interface is to add a new service called *Graylog*. Click *Services* in the main menu and then hit the *Add new service* button.
 
@@ -36,9 +40,18 @@ Click *Add alert destination* and you are done. Your PagerDuty account will now 
 
 This project is using Maven and requires Java 7 or higher.
 
-* Clone this repository
-* Run `mvn package` to build a JAR file.
-* Optional: Run `mvn jdeb:jdeb` and `mvn rpm:rpm` to create a DEB and RPM package respectively. 
-* Copy generated jar file in target directory to your Graylog server plugin directory
-* Restart Graylog server
-* Create a new PagerDuty Alarm Callback for a stream in the Graylog web interface
+You can build a plugin (JAR) with `mvn package`.
+
+DEB and RPM packages can be build with `mvn jdeb:jdeb` and `mvn rpm:rpm` respectively.
+
+## Plugin Release
+
+We are using the maven release plugin:
+
+```
+$ mvn release:prepare
+[...]
+$ mvn release:perform
+```
+
+This sets the version numbers, creates a tag and pushes to GitHub. TravisCI will build the release artifacts and upload to GitHub automatically.

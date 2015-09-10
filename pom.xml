@@ -6,14 +6,21 @@
         <maven>3.0</maven>
     </prerequisites>
 
-    <groupId>org.graylog</groupId>
-    <artifactId>alarmcallback-pagerduty</artifactId>
-    <version>1.2.3</version>
+    <groupId>org.graylog.plugins</groupId>
+    <artifactId>graylog-plugin-pagerduty</artifactId>
+    <version>1.2.4-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>graylog-alarmcallback-jabber</name>
+    <name>${project.artifactId}</name>
     <description>Graylog PagerDuty Alarmcallback plugin</description>
     <url>https://www.graylog.org</url>
+
+    <scm>
+        <connection>scm:git:git@github.com:Graylog2/graylog-plugin-pagerduty.git</connection>
+        <developerConnection>scm:git:git@github.com:Graylog2/graylog-plugin-pagerduty.git</developerConnection>
+        <url>https://github.com/Graylog2/graylog-plugin-pagerduty</url>
+        <tag>HEAD</tag>
+    </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -79,6 +86,19 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.2</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <mavenExecutorId>forked-path</mavenExecutorId>
+                    <tagNameFormat>@{project.version}</tagNameFormat>
+                    <preparationGoals>clean test</preparationGoals>
+                    <goals>package</goals>
+                </configuration>
             </plugin>
 
             <plugin>
