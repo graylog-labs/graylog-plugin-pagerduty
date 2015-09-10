@@ -50,7 +50,7 @@ public class PagerDutyAlarmCallbackMetadata implements PluginMetaData {
 
     @Override
     public Version getVersion() {
-        return new Version(1, 2, 4);
+        return new Version(1, 2, 5);
     }
 
     @Override
