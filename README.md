@@ -7,7 +7,9 @@ An alarm callback plugin for integrating [PagerDuty](http://pagerduty.com/) into
 
 ![Screenshot: Overview](https://s3.amazonaws.com/graylog2public/images/plugin-pagerduty-ac-1.png)
 
-**Required Graylog version:** 1.0 and later
+**Required Graylog version:** 2.0 and later
+
+Plugin versions starting with 1.3.0 require Graylog 2.0 and higher. For older Graylog versions please use previous releases.
 
 ## Installation
 
@@ -38,7 +40,7 @@ Click *Add alert destination* and you are done. Your PagerDuty account will now 
 
 ## Build
 
-This project is using Maven and requires Java 7 or higher.
+This project is using Maven and requires Java 8 or higher.
 
 You can build a plugin (JAR) with `mvn package`.
 
