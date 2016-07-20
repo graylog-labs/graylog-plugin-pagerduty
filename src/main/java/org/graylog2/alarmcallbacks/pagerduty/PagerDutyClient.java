@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import org.graylog2.plugin.Message;
@@ -119,6 +120,13 @@ public class PagerDutyClient {
             throw new AlarmCallbackException("Could not POST event trigger to PagerDuty API.", e);
         }
     }
+    private String buildStreamLink(String baseUrl, Stream stream) {
+        if (!baseUrl.endsWith("/")) {
+            baseUrl = baseUrl + "/";
+        }
+
+        return baseUrl + "streams/" + stream.getId() + "/messages?q=*&rangetype=relative&relative=3600";
+    }
 
     private PagerDutyEvent buildPagerDutyEvent(final Stream stream, final AlertCondition.CheckResult checkResult) {
         final String incidentKey;
@@ -127,15 +135,25 @@ public class PagerDutyClient {
         } else {
             incidentKey = "";
         }
+        final String alertDescription = checkResult.getTriggeredCondition().getDescription();
+        final String description = "[ " + stream.getTitle() + " ] " + checkResult.getResultDescription() + " - "
+                                    + buildStreamLink(clientUrl, stream);
 
         return new PagerDutyEvent(
-                serviceKey, "trigger", checkResult.getResultDescription(), incidentKey, clientName, clientUrl,
+                serviceKey, "trigger", description, incidentKey, clientName, buildStreamLink(clientUrl, stream),
                 ImmutableMap.<String, Object>of(
                         "stream_id", stream.getId(),
                         "stream_title", stream.getTitle(),
                         "backlog", checkResult.getTriggeredCondition().getBacklog(),
                         "search_hits", getAlarmBacklog(checkResult).size(),
-                        "alert_description", checkResult.getTriggeredCondition().getDescription()
+                        "alert_description", alertDescription
+                ),
+                ImmutableList.<Object>of(
+                        ImmutableMap.<String, Object>of(
+                                "type", "link",
+                                "href", buildStreamLink(clientUrl, stream)
+                        )
+
                 )
         );
     }
@@ -178,6 +196,8 @@ public class PagerDutyClient {
         public String clientUrl;
         @JsonProperty
         public Map<String, Object> details;
+        @JsonProperty
+        public List<Object> contexts;
 
         public PagerDutyEvent(String serviceKey,
                               String eventType,
@@ -185,7 +205,8 @@ public class PagerDutyClient {
                               String incidentKey,
                               String client,
                               String clientUrl,
-                              Map<String, Object> details) {
+                              Map<String, Object> details,
+                              List<Object> contexts) {
             this.serviceKey = serviceKey;
             this.eventType = eventType;
             this.description = description;
@@ -193,6 +214,7 @@ public class PagerDutyClient {
             this.client = client;
             this.clientUrl = clientUrl;
             this.details = details;
+            this.contexts = contexts;
         }
     }
 
