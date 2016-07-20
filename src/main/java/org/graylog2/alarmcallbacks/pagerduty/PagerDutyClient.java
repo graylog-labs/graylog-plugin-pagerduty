@@ -38,7 +38,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
 import java.net.MalformedURLException;
+import java.net.Proxy;
+import java.net.URI;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
@@ -55,6 +58,7 @@ public class PagerDutyClient {
     private final String incidentKeyPrefix;
     private final String clientName;
     private final String clientUrl;
+    private final URI httpProxyUri;
     private final ObjectMapper objectMapper;
 
     @VisibleForTesting
@@ -63,12 +67,14 @@ public class PagerDutyClient {
                     final String incidentKeyPrefix,
                     final String clientName,
                     final String clientUrl,
+                    final URI httpProxyUri,
                     final ObjectMapper objectMapper) {
         this.serviceKey = serviceKey;
         this.customIncidentKey = customIncidentKey;
         this.incidentKeyPrefix = incidentKeyPrefix;
         this.clientName = clientName;
         this.clientUrl = clientUrl;
+        this.httpProxyUri = httpProxyUri;
         this.objectMapper = objectMapper;
     }
 
@@ -76,8 +82,9 @@ public class PagerDutyClient {
                            final boolean customIncidentKey,
                            final String incidentKeyPrefix,
                            final String clientName,
-                           final String clientUrl) {
-        this(serviceKey, customIncidentKey, incidentKeyPrefix, clientName, clientUrl, new ObjectMapper());
+                           final String clientUrl,
+                           final URI httpProxyUri) {
+        this(serviceKey, customIncidentKey, incidentKeyPrefix, clientName, clientUrl, httpProxyUri, new ObjectMapper());
     }
 
     public void trigger(final Stream stream, final AlertCondition.CheckResult checkResult) throws AlarmCallbackException {
@@ -90,12 +97,19 @@ public class PagerDutyClient {
 
         final HttpURLConnection conn;
         try {
-            conn = (HttpURLConnection) url.openConnection();
-            conn.setDoOutput(true);
+            if (httpProxyUri != null) {
+                final InetSocketAddress proxyAddress = new InetSocketAddress(httpProxyUri.getHost(), httpProxyUri.getPort());
+                final Proxy proxy = new Proxy(Proxy.Type.HTTP, proxyAddress);
+                conn = (HttpURLConnection) url.openConnection(proxy);
+            } else {
+                conn = (HttpURLConnection) url.openConnection();
+            }
             conn.setRequestMethod("POST");
         } catch (IOException e) {
             throw new AlarmCallbackException("Error while opening connection to PagerDuty API.", e);
         }
+
+        conn.setDoOutput(true);
 
         try (final OutputStream requestStream = conn.getOutputStream()) {
             final PagerDutyEvent event = buildPagerDutyEvent(stream, checkResult);
@@ -120,6 +134,7 @@ public class PagerDutyClient {
             throw new AlarmCallbackException("Could not POST event trigger to PagerDuty API.", e);
         }
     }
+
     private String buildStreamLink(String baseUrl, Stream stream) {
         if (!baseUrl.endsWith("/")) {
             baseUrl = baseUrl + "/";

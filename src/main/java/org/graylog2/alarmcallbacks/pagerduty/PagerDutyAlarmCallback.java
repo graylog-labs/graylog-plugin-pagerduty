@@ -33,6 +33,9 @@ import org.graylog2.plugin.configuration.fields.ConfigurationField;
 import org.graylog2.plugin.configuration.fields.TextField;
 import org.graylog2.plugin.streams.Stream;
 
+import javax.annotation.Nullable;
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Map;
@@ -44,7 +47,13 @@ public class PagerDutyAlarmCallback implements AlarmCallback {
     private static final String CK_CLIENT = "client";
     private static final String CK_CLIENT_URL = "client_url";
 
+    private final URI httpProxyUri;
     private Configuration configuration;
+
+    @Inject
+    public PagerDutyAlarmCallback(@Named("http_proxy_uri") @Nullable URI httpProxyUri) {
+        this.httpProxyUri = httpProxyUri;
+    }
 
     @Override
     public void initialize(final Configuration config) throws AlarmCallbackConfigurationException {
@@ -58,7 +67,8 @@ public class PagerDutyAlarmCallback implements AlarmCallback {
                 configuration.getBoolean(CK_CUSTOM_INCIDENT_KEY),
                 configuration.getString(CK_INCIDENT_KEY_PREFIX),
                 configuration.getString(CK_CLIENT),
-                configuration.getString(CK_CLIENT_URL)), stream, result);
+                configuration.getString(CK_CLIENT_URL),
+                httpProxyUri), stream, result);
     }
 
     @VisibleForTesting

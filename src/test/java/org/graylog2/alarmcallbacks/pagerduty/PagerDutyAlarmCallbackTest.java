@@ -50,7 +50,7 @@ public class PagerDutyAlarmCallbackTest {
 
     @Before
     public void setUp() {
-        pagerDutyAlarmCallback = new PagerDutyAlarmCallback();
+        pagerDutyAlarmCallback = new PagerDutyAlarmCallback(null);
     }
 
     @Test
