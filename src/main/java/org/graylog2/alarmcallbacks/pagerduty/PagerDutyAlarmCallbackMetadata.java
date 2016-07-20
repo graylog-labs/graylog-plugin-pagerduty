@@ -45,12 +45,12 @@ public class PagerDutyAlarmCallbackMetadata implements PluginMetaData {
 
     @Override
     public URI getURL() {
-        return URI.create("http://www.graylog.org");
+        return URI.create("https://www.graylog.org");
     }
 
     @Override
     public Version getVersion() {
-        return new Version(1, 3, 0, "SNAPSHOT");
+        return new Version(1, 3, 0);
     }
 
     @Override
