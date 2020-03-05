@@ -1,52 +1,51 @@
-PagerDuty Plugin for Graylog
-============================
+# PagerDutyNotificationPlugin Plugin for Graylog
 
-[![Build Status](https://travis-ci.org/Graylog2/graylog-plugin-pagerduty.svg)](https://travis-ci.org/Graylog2/graylog-plugin-pagerduty)
+[![Build Status](https://travis-ci.org/https://github.com/graylog-labs/graylog-plugin-pagerduty.svg?branch=master)](https://travis-ci.org/https://github.com/graylog-labs/graylog-plugin-pagerduty)
 
-An alarm callback plugin for integrating [PagerDuty](http://pagerduty.com/) into [Graylog](https://www.graylog.org/).
-
-![Screenshot: Overview](https://s3.amazonaws.com/graylog2public/images/plugin-pagerduty-ac-1.png)
+__Use this paragraph to enter a description of your plugin.__
 
 **Required Graylog version:** 2.0 and later
 
-Plugin versions starting with 1.3.0 require Graylog 2.0 and higher. For older Graylog versions please use previous releases.
+Installation
+------------
 
-## Installation
-
-[Download the plugin](https://github.com/Graylog2/graylog-plugin-pagerduty/releases)
+[Download the plugin](https://github.com/https://github.com/graylog-labs/graylog-plugin-pagerduty/releases)
 and place the `.jar` file in your Graylog plugin directory. The plugin directory
 is the `plugins/` folder relative from your `graylog-server` directory by default
 and can be configured in your `graylog.conf` file.
 
 Restart `graylog-server` and you are done.
 
-## Usage
+Development
+-----------
 
-The only thing you need to do in your PagerDuty interface is to add a new service called *Graylog*. Click *Services* in the main menu and then hit the *Add new service* button.
+You can improve your development experience for the web interface part of your plugin
+dramatically by making use of hot reloading. To do this, do the following:
 
-![Screenshot: Adding a new service in PagerDuty](https://s3.amazonaws.com/graylog2public/images/plugin-pagerduty-ac-2.png)
+* `git clone https://github.com/Graylog2/graylog2-server.git`
+* `cd graylog2-server/graylog2-web-interface`
+* `ln -s $YOURPLUGIN plugin/`
+* `npm install && npm start`
 
-Give the new service any name you’d like, for example *graylog* and select an escalation policy. Select *Graylog* from the *Integration type* dropdown box and click *Add Service*.
+Usage
+-----
 
-On the next page you will see the *Service API Key* that Graylog needs to notify PagerDuty about alerts. Copy it.
+__Use this paragraph to document the usage of your plugin__
 
-![Screenshot: Copying the Service Key from PagerDuty](https://s3.amazonaws.com/graylog2public/images/plugin-pagerduty-ac-3.png)
 
-The last thing to do is to copy that token into the alarm callback configuration in Graylog.
+Getting started
+---------------
 
-![Screenshot: Configuring the PagerDuty alarm callback in Graylog](https://s3.amazonaws.com/graylog2public/images/plugin-pagerduty-ac-4.png)
+This project is using Maven 3 and requires Java 8 or higher.
 
-Click *Add alert destination* and you are done. Your PagerDuty account will now receive alerts of this stream.
+* Clone this repository.
+* Run `mvn package` to build a JAR file.
+* Optional: Run `mvn jdeb:jdeb` and `mvn rpm:rpm` to create a DEB and RPM package respectively.
+* Copy generated JAR file in target directory to your Graylog plugin directory.
+* Restart the Graylog.
 
-## Build
-
-This project is using Maven and requires Java 8 or higher.
-
-You can build a plugin (JAR) with `mvn package`.
-
-DEB and RPM packages can be build with `mvn jdeb:jdeb` and `mvn rpm:rpm` respectively.
-
-## Plugin Release
+Plugin Release
+--------------
 
 We are using the maven release plugin:
 
@@ -56,4 +55,4 @@ $ mvn release:prepare
 $ mvn release:perform
 ```
 
-This sets the version numbers, creates a tag and pushes to GitHub. TravisCI will build the release artifacts and upload to GitHub automatically.
+This sets the version numbers, creates a tag and pushes to GitHub. Travis CI will build the release artifacts and upload to GitHub automatically.
