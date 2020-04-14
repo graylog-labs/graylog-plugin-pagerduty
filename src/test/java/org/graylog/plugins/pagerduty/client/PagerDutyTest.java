@@ -27,6 +27,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
@@ -34,7 +35,6 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.glassfish.grizzly.utils.Charsets;
 import org.graylog.events.notifications.EventNotificationContext;
 import org.graylog.plugins.pagerduty.PagerDutyNotificationConfig;
 import org.graylog.plugins.pagerduty.dto.PagerDutyMessage;
@@ -123,7 +123,7 @@ public class PagerDutyTest
             "{test='json'}",
             IOUtils.toString(
                 postEntityCaptor.getValue().getEntity().getContent(),
-                Charsets.UTF8_CHARSET));
+                StandardCharsets.UTF_8));
     }
 
     @Test
