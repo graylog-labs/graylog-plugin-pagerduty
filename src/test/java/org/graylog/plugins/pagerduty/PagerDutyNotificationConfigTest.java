@@ -30,6 +30,34 @@ public class PagerDutyNotificationConfigTest {
     PagerDutyNotificationConfig.Builder sutBuilder = PagerDutyNotificationConfig.Builder.create();
 
     @Test
+    public void testValidConfigurationWithHttp() {
+        ValidationResult result =
+            sutBuilder
+                .routingKey("01234567890123456789012345678901")
+                .customIncident(false)
+                .keyPrefix("TestPrefix")
+                .clientName("TestName")
+                .clientUrl("http://test/")
+                .build()
+                .validate();
+        assertEquals("Error count", 0, result.getErrors().size());
+    }
+
+    @Test
+    public void testValidConfigurationWithHttps() {
+        ValidationResult result =
+            sutBuilder
+                .routingKey("01234567890123456789012345678901")
+                .customIncident(false)
+                .keyPrefix("TestPrefix")
+                .clientName("TestName")
+                .clientUrl("https://test/")
+                .build()
+                .validate();
+        assertEquals("Error count", 0, result.getErrors().size());
+    }
+
+    @Test
     public void testEmptyRoutingKeyValidation() {
         ValidationResult result =
             sutBuilder

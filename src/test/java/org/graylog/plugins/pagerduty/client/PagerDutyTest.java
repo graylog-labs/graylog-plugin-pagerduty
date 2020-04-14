@@ -25,14 +25,16 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.InputStream;
+
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.glassfish.grizzly.utils.Charsets;
 import org.graylog.events.notifications.EventNotificationContext;
 import org.graylog.plugins.pagerduty.PagerDutyNotificationConfig;
 import org.graylog.plugins.pagerduty.dto.PagerDutyMessage;
@@ -40,9 +42,12 @@ import org.graylog.plugins.pagerduty.dto.PagerDutyResponse;
 import org.graylog2.streams.StreamService;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * @author Edgar Molina
@@ -102,14 +107,23 @@ public class PagerDutyTest
     @Test
     public void testSuccessfulTriggerAttempt() throws IOException
     {
+        // Setup
+        ArgumentCaptor<HttpPost> postEntityCaptor = ArgumentCaptor.forClass(HttpPost.class);
+
         // Execute
         PagerDutyResponse result = sut.trigger(contextMock);
 
         // Assert
-        assertEquals("Wrong Response Object", pagerDutyResponseMock, result);
         verify(httpResponseMock).close();
-        verify(loggerMock).debug("Triggering event in PagerDuty with context: {}", contextMock);
-        verify(loggerMock).debug("Request Payload: {}", "{test='json'}");
+        verify(httpClientMock).execute(postEntityCaptor.capture());
+        verify(messageFactoryMock).createTriggerMessage(contextMock);
+        assertEquals("Wrong Response Object", pagerDutyResponseMock, result);
+        assertEquals(
+            "Wrong Payload",
+            "{test='json'}",
+            IOUtils.toString(
+                postEntityCaptor.getValue().getEntity().getContent(),
+                Charsets.UTF8_CHARSET));
     }
 
     @Test
