@@ -154,13 +154,15 @@ public class PagerDutyClient {
         final String description = "[ " + stream.getTitle() + " ] " + checkResult.getResultDescription() + " - "
                                     + buildStreamLink(clientUrl, stream);
 
+        final List<Message> backlog_items = getAlarmBacklog(checkResult);
+        final String backlog_summary = getAlarmBacklogSummary(backlog_items);
         return new PagerDutyEvent(
                 serviceKey, "trigger", description, incidentKey, clientName, buildStreamLink(clientUrl, stream),
                 ImmutableMap.<String, Object>of(
                         "stream_id", stream.getId(),
                         "stream_title", stream.getTitle(),
                         "backlog", checkResult.getTriggeredCondition().getBacklog(),
-                        "search_hits", getAlarmBacklog(checkResult).size(),
+                        "hits", backlog_summary,
                         "alert_description", alertDescription
                 ),
                 ImmutableList.<Object>of(
@@ -171,6 +173,19 @@ public class PagerDutyClient {
 
                 )
         );
+    }
+
+    protected String getAlarmBacklogSummary(List<Message> messages) {
+        final StringBuilder sb = new StringBuilder();
+        for (Message message : messages) {
+            final String msg = message.getMessage();
+            if (msg.length() > 225) {
+                sb.append("Message: {").append(msg.substring(0, 255)).append("... }  ");
+            } else {
+                sb.append("Message: {").append(msg).append("}  ");
+            }
+        }
+        return sb.toString();
     }
 
     protected List<Message> getAlarmBacklog(AlertCondition.CheckResult result) {
