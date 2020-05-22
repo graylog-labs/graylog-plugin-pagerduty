@@ -27,9 +27,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:https://github.com/graylog-labs/graylog-plugin-pagerduty.git</connection>
-        <developerConnection>scm:git:git@github.com:https://github.com/graylog-labs/graylog-plugin-pagerduty.git</developerConnection>
-        <url>https://github.com/https://github.com/graylog-labs/graylog-plugin-pagerduty</url>
+        <connection>scm:git:git@github.com:graylog-labs/graylog-plugin-pagerduty.git</connection>
+        <developerConnection>scm:git:git@github.com:graylog-labs/graylog-plugin-pagerduty.git</developerConnection>
+        <url>https://github.com/graylog-labs/graylog-plugin-pagerduty</url>
         <tag>HEAD</tag>
     </scm>
 
