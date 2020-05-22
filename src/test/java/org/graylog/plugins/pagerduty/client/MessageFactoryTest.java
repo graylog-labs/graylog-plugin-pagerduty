@@ -51,6 +51,7 @@ public class MessageFactoryTest {
     private static final String TEST_STREAM_TITLE = "Test Stream Title";
     private static final String CLIENT_URL = "https://test";
     private static final String STREAM_ID = "0001";
+    private static final String TEST_TIMESTAMP = new DateTime(1).toString();
 
     @Mock
     private StreamService streamServiceMock;
@@ -131,7 +132,7 @@ public class MessageFactoryTest {
             + "severity=critical, "
             + "component=GraylogAlerts, source=Graylog:[0001], "
             + "class=alerts, "
-            + "timestamp=1969-12-31T18:00:00.001-06:00, "
+            + "timestamp=" + TEST_TIMESTAMP + ", "
             + "group=[0001]}",
             result.getPayload().toString());
     }
@@ -166,7 +167,7 @@ public class MessageFactoryTest {
             + "severity=warning, "
             + "component=GraylogAlerts, source=Graylog:[0001], "
             + "class=alerts, "
-            + "timestamp=1969-12-31T18:00:00.001-06:00, "
+            + "timestamp=" + TEST_TIMESTAMP + ", "
             + "group=[0001]}",
             result.getPayload().toString());
     }
@@ -201,7 +202,7 @@ public class MessageFactoryTest {
             + "severity=info, "
             + "component=GraylogAlerts, source=Graylog:[0001], "
             + "class=alerts, "
-            + "timestamp=1969-12-31T18:00:00.001-06:00, "
+            + "timestamp=" + TEST_TIMESTAMP + ", "
             + "group=[0001]}",
             result.getPayload().toString());
     }
@@ -236,7 +237,7 @@ public class MessageFactoryTest {
             + "severity=info, "
             + "component=GraylogAlerts, source=Graylog:[0001], "
             + "class=alerts, "
-            + "timestamp=1969-12-31T18:00:00.001-06:00, "
+            + "timestamp=" + TEST_TIMESTAMP + ", "
             + "group=[0001]}",
             result.getPayload().toString());
     }
@@ -271,7 +272,7 @@ public class MessageFactoryTest {
             + "severity=info, "
             + "component=GraylogAlerts, source=Graylog:[0001], "
             + "class=alerts, "
-            + "timestamp=1969-12-31T18:00:00.001-06:00, "
+            + "timestamp=" + TEST_TIMESTAMP + ", "
             + "group=[0001]}",
             result.getPayload().toString());
     }
@@ -303,7 +304,7 @@ public class MessageFactoryTest {
             + "severity=critical, "
             + "component=GraylogAlerts, source=Graylog:[0001], "
             + "class=alerts, "
-            + "timestamp=1969-12-31T18:00:00.001-06:00, "
+            + "timestamp=" + TEST_TIMESTAMP + ", "
             + "group=[0001]}",
             result.getPayload().toString());
     }
@@ -333,7 +334,7 @@ public class MessageFactoryTest {
             + "severity=critical, "
             + "component=GraylogAlerts, source=Graylog:[], "
             + "class=alerts, "
-            + "timestamp=1969-12-31T18:00:00.001-06:00, "
+            + "timestamp=" + TEST_TIMESTAMP + ", "
             + "group=[]}",
             result.getPayload().toString());
     }
@@ -369,7 +370,7 @@ public class MessageFactoryTest {
             + "severity=info, "
             + "component=GraylogAlerts, source=Graylog:[0001], "
             + "class=alerts, "
-            + "timestamp=1969-12-31T18:00:00.001-06:00, "
+            + "timestamp=" + TEST_TIMESTAMP + ", "
             + "group=[0001]}",
             result.getPayload().toString());
     }
