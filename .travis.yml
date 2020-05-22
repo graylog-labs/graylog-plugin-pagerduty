@@ -1,8 +1,7 @@
-sudo: required
-dist: trusty
+sudo: false
 language: java
 jdk:
-  - oraclejdk8
+  - openjdk8
 addons:
   apt:
     packages:
@@ -22,7 +21,7 @@ before_deploy:
 deploy:
   provider: releases
   api_key:
-    secure: <enter your encrypted GitHub access token>
+    secure: VPPvEekibGYSb/Jh8C99NSBCZuOMiuKGor5qUBhy2KYIUbteQz8Xuil2t/64YUtzBJfd7kGdNDT3pXP6v8qVts0gIroJzGL1e/rbLPQF8vBRmc5iOWNhb9zrrMIY6puNa6bpht+URxFAUJBKp8UmmOPTyfy2TOkDGSPQntorMZ0=
   file:
     - "${RELEASE_PKG_FILE}"
     - "${RELEASE_DEB_FILE}"
@@ -30,4 +29,4 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
-    jdk: oraclejdk8
+    jdk: openjdk8
