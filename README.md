@@ -1,20 +1,51 @@
 # PagerDutyNotificationPlugin Plugin for Graylog
 
-[![Build Status](https://travis-ci.org/https://github.com/graylog-labs/graylog-plugin-pagerduty.svg?branch=master)](https://travis-ci.org/https://github.com/graylog-labs/graylog-plugin-pagerduty)
+A Notification plugin to integrate Graylog with PagerDuty as documented 
+[here](https://developer.pagerduty.com/docs/events-api-v2/trigger-events/).
 
-__Use this paragraph to enter a description of your plugin.__
-
-**Required Graylog version:** 2.0 and later
+**Required Graylog version:** 3.1 and later
 
 Installation
 ------------
 
-[Download the plugin](https://github.com/https://github.com/graylog-labs/graylog-plugin-pagerduty/releases)
+[Download the plugin](https://github.com/graylog-labs/graylog-plugin-pagerduty/releases)
 and place the `.jar` file in your Graylog plugin directory. The plugin directory
 is the `plugins/` folder relative from your `graylog-server` directory by default
 and can be configured in your `graylog.conf` file.
 
 Restart `graylog-server` and you are done.
+
+Usage
+-----
+
+After deploying the plugin, a new Notification type will be available to select in
+the alerts screen. For more information about setting up an alert please 
+[see](https://docs.graylog.org/en/3.1/pages/streams/alerts.html).
+
+![Screenshot: Notification Type](images/pagerduty-notification-1.png)
+
+The following configuration parameters are required,
+
+![Screenshot: Notification Type](images/pagerduty-notification-2.png)
+
+* _Routing Key_: The PagerDuty Routing Key defined as "[...] the 32 character 
+Integration Key for an integration on a service or on a global ruleset" 
+[here](https://developer.pagerduty.com/docs/events-api-v2/trigger-events/).
+* _Incident Key Prefix_: The prefix to identify the event in PagerDuty.
+* _Client Name_: A String to identify the integration in PagerDuty.
+* _Client URL_: This will add a link to the desired destination URL that will be
+included in the event. The PagerDuty event will also include a direct link to a
+Graylog search query using this URL.
+
+The following configuration parameters are optional,
+* _Use Custom Incident Key_: Enabling it will generate a custom deduplication
+key for correlating, the value will follow the format,
+  
+  ``` Incident Key Prefix/[Source Streams Separated by Comma]/Event Title ```
+
+This is an example of a notification triggered from Graylog.
+
+![Screenshot: Notification Type](images/pagerduty-notification-3.png)
 
 Development
 -----------
@@ -26,12 +57,6 @@ dramatically by making use of hot reloading. To do this, do the following:
 * `cd graylog2-server/graylog2-web-interface`
 * `ln -s $YOURPLUGIN plugin/`
 * `npm install && npm start`
-
-Usage
------
-
-__Use this paragraph to document the usage of your plugin__
-
 
 Getting started
 ---------------
