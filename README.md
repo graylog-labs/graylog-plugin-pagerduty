@@ -3,7 +3,7 @@
 A Notification plugin to integrate Graylog with PagerDuty as documented 
 [here](https://developer.pagerduty.com/docs/events-api-v2/trigger-events/).
 
-**Required Graylog version:** 3.1 and later
+**Required Graylog version:** 3.3 and later
 
 Installation
 ------------
