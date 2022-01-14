@@ -5,6 +5,12 @@ A Notification plugin to integrate Graylog with PagerDuty as documented
 
 **Required Graylog version:** 3.3 and later
 
+Deprecated
+----------
+**As of Graylog version 4.0.0, PagerDuty notifications are integrated into the core
+product. Do not use the graylog-labs plugin on versions 4.x and above as it lacks 
+support for new notification types.**
+
 Installation
 ------------
 
